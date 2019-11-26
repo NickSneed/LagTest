@@ -1,150 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Lat Test</title>
-    <style>
-        body {
-            background: #000;
-            margin: 0;
-            padding: 0;
-        }
-        
-        #wrapper {
-            bottom: 0;
-            height: 700px;
-            left: 0;
-            margin: auto;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 150px;
-        }
-        
-        #target,
-        #cursor {
-            box-sizing: border-box;
-            border: 8px solid #7b7b7b;
-            height: 150px;
-            margin-top: -75px;
-            top: 50%;
-            position: absolute;
-            width: 150px;
-            z-index: 1;
-        }
-        
-        #cursor {
-            border-color: #fff;
-            margin: 0;
-            top: 0;
-            z-index: 2;
-        }
-        
-        #results {
-            color: #fff;
-            font-family: arial;
-            font-size: 40px;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-        }
-    </style>
-</head>
-<body>
+    <head>
+        <title>Lag Test</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
 
-    <div id="wrapper">
-        <div id="cursor"></div>
-        <div id="target"></div>
-    </div>
-    <div id="results"></div>
+        <div id="wrapper">
+            <div id="cursor"></div>
+            <div id="target"></div>
+        </div>
+        <div id="results"></div>
 
-     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-        var yPos = 0,
-            aniDir = 1,
-            aniSpeed = 5,
-            cursorEl = $('#cursor'),
-            resultsEl = $('#results'),
-            timingIntStart = false,
-            timeLag = 0,
-            results = [];
-        
-        var fps,
-            delta,
-            lastCalledTime;
-        
-        function animation() {
-            /*
-            if(!lastCalledTime) {
-                 lastCalledTime = Date.now();
-                 fps = 0;
-              }
-              delta = (Date.now() - lastCalledTime)/1000;
-              lastCalledTime = Date.now();
-              fps = 1 / delta;
-            console.log(fps);
-            */
-            
-            yPos = yPos + (aniDir * aniSpeed);
-            cursorEl.css('transform', "translate3d(0px, " + yPos + "px, 0px)");
-            if (yPos > 550 && aniDir === 1) {
-                aniDir = -1;
-                timingIntStart = false;
-                timeLag = 0;
-            }
-            if (yPos < 0 && aniDir === -1) {
-                aniDir = 1;
-                timingIntStart = false;
-                timeLag = 0;
-            }
-            if (yPos === 275) {
-                cursorEl.css('border-color', "#ff0000");
-                setTimeout(function(){ 
-                    cursorEl.css('border-color', "#fff")
-                }, 100);
-                timingIntStart = true;
-            }
-            if (timingIntStart) {
-                timeLag++;
-            }
-            requestAnimationFrame(animation);
-        }
-        requestAnimationFrame(animation);
-        
-        $(document).keypress(function(e) {
-            if(e.which == 116) {
-                if (results.length === 0) {
-                    resultsEl.html('');
-                }
-                if (timingIntStart) {
-                    if (results.length < 9) {
-                        resultsEl.append(timeLag + '<br>');
-                        results.push(timeLag);
-                    } else {
-                        var total = 0,
-                            i,
-                            avg,
-                            m;
-                        
-                        results.push(timeLag);
-                        resultsEl.append(timeLag + '<br>');
-                        
-                        for(var i = 0; i < results.length; i++) {
-                            total += results[i];
-                        }
-                        avg = total / results.length;
-                        avg = Math.round(avg * 100) / 100;
-                        m =  Math.round(((avg / 60) * 1000) * 100) / 100;
-                        
-                        resultsEl.append('average: ' + avg + '<br>');
-                        resultsEl.append('average: ' + m + 'milliseconds');
-                        
-                        
-                        results = [];
-                    }
-                } 
-            }
-        });
-
-    </script>
-</body>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="app.js"></script>
+    </body>
 </html>

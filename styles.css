@@ -1,0 +1,44 @@
+body {
+	background: #000;
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper {
+	bottom: 0;
+	height: 700px;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 150px;
+}
+
+#target,
+#cursor {
+	box-sizing: border-box;
+	border: 8px solid #7b7b7b;
+	height: 150px;
+	margin-top: -75px;
+	top: 50%;
+	position: absolute;
+	width: 150px;
+	z-index: 1;
+}
+
+#cursor {
+	border-color: #fff;
+	margin: 0;
+	top: 0;
+	z-index: 2;
+}
+
+#results {
+	color: #fff;
+	font-family: arial;
+	font-size: 40px;
+	position: absolute;
+	left: 20px;
+	top: 20px;
+}
