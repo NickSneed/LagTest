@@ -1,7 +1,9 @@
 body {
 	background: #000;
+	font-family: arial;
 	margin: 0;
 	padding: 0;
+	text-align: center;
 }
 
 #wrapper {
@@ -36,9 +38,12 @@ body {
 
 #results {
 	color: #fff;
-	font-family: arial;
 	font-size: 40px;
 	position: absolute;
 	left: 20px;
 	top: 20px;
+}
+
+h2 {
+	color: #fff;
 }

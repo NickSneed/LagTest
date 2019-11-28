@@ -10,14 +10,14 @@
 		timeLag = 0,
 		results = [];
 
-	/*
+/*
 	var fps,
 		delta,
 		lastCalledTime;
-		*/
+        */
 
 	function animation() {
-		/*
+/*
 		if(!lastCalledTime) {
 			lastCalledTime = Date.now();
 			fps = 0;
@@ -26,7 +26,8 @@
 		lastCalledTime = Date.now();
 		fps = 1 / delta;
 		console.log(fps);
-		*/
+        */
+	
 
 		yPos = yPos + (aniDir * aniSpeed);
 		cursorEl.css('transform', 'translate3d(0px, ' + yPos + 'px, 0px)');
@@ -55,7 +56,9 @@
 	requestAnimationFrame(animation);
 
 	$(document).keypress(function(e) {
-		if (e.which === 116) {
+        
+        // press space
+		if (e.which === 32) {
 			if (results.length === 0) {
 				resultsEl.html('');
 			}
