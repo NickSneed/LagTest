@@ -3,54 +3,67 @@
 
 	var yPos = 0,
 		aniDir = 1,
-		aniSpeed = 5,
-		cursorEl = $('#cursor'),
-		resultsEl = $('#results'),
 		timingIntStart = false,
 		timeLag = 0,
-		results = [];
-
-/*
-	var fps,
+		results = [],
+		fps,
 		delta,
 		lastCalledTime;
-        */
+
+	const $cursorEl = $('#cursor'),
+		$resultsEl = $('#results'),
+		$fpsEl = $('#fps'),
+		showFPS = true,
+		aniSpeed = 5,
+		totalResults = 3;
 
 	function animation() {
-/*
-		if(!lastCalledTime) {
+		// display the current fps
+		if (showFPS) {
+			if(!lastCalledTime) {
+				lastCalledTime = Date.now();
+				fps = 0;
+			}
+			delta = (Date.now() - lastCalledTime) / 1000;
 			lastCalledTime = Date.now();
-			fps = 0;
-		}
-		delta = (Date.now() - lastCalledTime)/1000;
-		lastCalledTime = Date.now();
-		fps = 1 / delta;
-		console.log(fps);
-        */
-	
+			fps = 1 / delta;
 
+			$fpsEl.html(fps.toFixed(2));
+		}
+
+		// move the box
 		yPos = yPos + (aniDir * aniSpeed);
-		cursorEl.css('transform', 'translate3d(0px, ' + yPos + 'px, 0px)');
+		$cursorEl.css('transform', 'translate3d(0px, ' + yPos + 'px, 0px)');
+
+		// if the box gets too low turn around
 		if (yPos > 550 && aniDir === 1) {
 			aniDir = -1;
 			timingIntStart = false;
 			timeLag = 0;
 		}
+
+		// if the box gets too high turn around
 		if (yPos < 0 && aniDir === -1) {
 			aniDir = 1;
 			timingIntStart = false;
 			timeLag = 0;
 		}
+
+		// box is in the center
 		if (yPos === 275) {
-			cursorEl.css('border-color', '#ff0000');
+			$cursorEl.css('border-color', '#ff0000');
 			setTimeout(function() {
-				cursorEl.css('border-color', '#fff');
+				$cursorEl.css('border-color', '#fff');
 			}, 100);
 			timingIntStart = true;
 		}
+
+		// start tracking lag time
 		if (timingIntStart) {
 			timeLag++;
 		}
+
+		// next frame
 		requestAnimationFrame(animation);
 	}
 	requestAnimationFrame(animation);
@@ -60,30 +73,30 @@
         // press space
 		if (e.which === 32) {
 			if (results.length === 0) {
-				resultsEl.html('');
+				$resultsEl.html('');
 			}
+
+			// if the white square is past the gray one record results
+			// if it was pressed before throw it out
 			if (timingIntStart) {
-				if (results.length < 9) {
-					resultsEl.append(timeLag + '<br>');
+				
+				// add a result
+				if (results.length < totalResults) {
+					$resultsEl.append(timeLag + '<br>');
 					results.push(timeLag);
-				} else {
-					var total = 0,
-						i,
-						avg,
+				}
+				
+				// average the results and show the totals
+				if (results.length == totalResults) {
+					var avg,
 						m;
-
-					results.push(timeLag);
-					resultsEl.append(timeLag + '<br>');
-
-					for (i = 0; i < results.length; i++) {
-						total += results[i];
-					}
-					avg = total / results.length;
+					
+					avg = (results.reduce((a, b) => a + b)) / results.length;
 					avg = Math.round(avg * 100) / 100;
 					m =  Math.round(((avg / 60) * 1000) * 100) / 100;
 
-					resultsEl.append('average: ' + avg + '<br>');
-					resultsEl.append('average: ' + m + 'milliseconds');
+					$resultsEl.append('average: ' + avg + '<br>');
+					$resultsEl.append('average: ' + m + 'milliseconds');
 
 					results = [];
 				}

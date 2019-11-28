@@ -1,5 +1,6 @@
 body {
 	background: #000;
+	color: #fff;
 	font-family: arial;
 	margin: 0;
 	padding: 0;
@@ -41,7 +42,14 @@ body {
 	font-size: 40px;
 	position: absolute;
 	left: 20px;
+	text-align: left;
 	top: 20px;
+}
+
+#fps {
+	bottom: 20px;
+	left:  20px;
+	position: absolute;
 }
 
 h2 {
