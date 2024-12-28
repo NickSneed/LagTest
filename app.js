@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	'use strict';
 
 	var yPos = 0,
@@ -20,7 +20,7 @@
 	function animation() {
 		// display the current fps
 		if (showFPS) {
-			if(!lastCalledTime) {
+			if (!lastCalledTime) {
 				lastCalledTime = Date.now();
 				fps = 0;
 			}
@@ -52,7 +52,7 @@
 		// box is in the center
 		if (yPos === 275) {
 			$cursorEl.css('border-color', '#ff0000');
-			setTimeout(function() {
+			setTimeout(function () {
 				$cursorEl.css('border-color', '#fff');
 			}, 100);
 			timingIntStart = true;
@@ -68,9 +68,9 @@
 	}
 	requestAnimationFrame(animation);
 
-	$(document).keypress(function(e) {
-        
-        // press space
+	$(document).keypress(function (e) {
+
+		// press space
 		if (e.which === 32) {
 			if (results.length === 0) {
 				$resultsEl.html('');
@@ -79,21 +79,21 @@
 			// if the white square is past the gray one record results
 			// if it was pressed before throw it out
 			if (timingIntStart) {
-				
+
 				// add a result
 				if (results.length < totalResults) {
 					$resultsEl.append(timeLag + '<br>');
 					results.push(timeLag);
 				}
-				
+
 				// average the results and show the totals
 				if (results.length == totalResults) {
 					var avg,
 						m;
-					
+
 					avg = (results.reduce((a, b) => a + b)) / results.length;
 					avg = Math.round(avg * 100) / 100;
-					m =  Math.round(((avg / 60) * 1000) * 100) / 100;
+					m = Math.round(((avg / 60) * 1000) * 100) / 100;
 
 					$resultsEl.append('average: ' + avg + '<br>');
 					$resultsEl.append('average: ' + m + 'milliseconds');
